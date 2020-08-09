@@ -10,7 +10,7 @@ import kotlin.random.Random
 
 class MainActivity : AppCompatActivity(), ExampleAdapter.OnItemClickListener {
     private val exampleList = generateDummyList(20)
-    private val adapter = ExampleAdapter(exampleList)
+    private val adapter = ExampleAdapter(exampleList, this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
