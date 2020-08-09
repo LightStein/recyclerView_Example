@@ -8,7 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.example_item.view.*
 
-class ExampleAdapter(private val exampleList: List<ExampleItem>): RecyclerView.Adapter<ExampleAdapter.ExapleViewHolder>(){
+class ExampleAdapter(private val exampleList: List<ExampleItem>,
+private val listener: OnItemClickListener): RecyclerView.Adapter<ExampleAdapter.ExapleViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExapleViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.example_item, parent, false)
@@ -25,9 +26,23 @@ class ExampleAdapter(private val exampleList: List<ExampleItem>): RecyclerView.A
 
     override fun getItemCount() = exampleList.size
 
-    class ExapleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class ExapleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
         val iamgeView: ImageView = itemView.image_view
         val textView1: TextView = itemView.text_view_1
         val textView2: TextView = itemView.text_view_2
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            val position: Int = adapterPosition
+            if (position != RecyclerView.NO_POSITION)
+            listener.onItemClick(position)
+        }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
     }
 }
